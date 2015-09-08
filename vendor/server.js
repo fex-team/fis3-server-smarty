@@ -197,6 +197,6 @@ exports.start = function(opt, callback) {
   });
 };
 
-exports.clean = function() {
+/*exports.clean = function() {
 
-};
+};*/
