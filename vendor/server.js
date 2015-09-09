@@ -134,9 +134,8 @@ function start(opt, callback) {
 
       }
 
-      var lockFile = path.join(opt.root, '__framework.lock');
-      if (!fis.util.exists(lockFile)) {
-        fis.util.write(lockFile, '');
+      var indexPHP = path.join(opt.root, 'index.php');
+      if (!fis.util.exists(indexPHP)) {
         extract(path.join(__dirname, 'framework.tar'), opt.root, open);
       } else {
         setTimeout(open, 200);
