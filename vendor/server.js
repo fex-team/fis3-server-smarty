@@ -99,6 +99,10 @@ function start(opt, callback) {
     delete opt.https;
   }
 
+  if (typeof opt.rewrite === 'undefined') {
+    opt.rewrite = fis.get('server.rewrite', true);
+  }
+
   fis.util.map(opt, function(key, value) {
     args.push('--' + key, String(value));
   });
