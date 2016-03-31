@@ -200,6 +200,29 @@ exports.start = function(opt, callback) {
   });
 };
 
-/*exports.clean = function() {
+exports.clean = function(options) {
+  var argExclude = options.exclude || [];
 
-};*/
+  if (!Array.isArray(argExclude)) {
+    argExclude = [argExclude];
+  }
+
+  // merge command args
+  var exclude = [
+    '/fisdata/**',
+    '/index.php',
+    '/rewrite/**',
+    '/server.log',
+    '/smarty/**',
+    '/WEB-INF/**',
+    '/php-simulation-env/**',
+    '/welcome.php'
+  ].concat(argExclude);
+
+  // because fis.util.glob beginning with `^/`，so need fix it.
+  exclude = exclude.map(function (fix) {
+    return options.root + fix;
+  });
+  
+  fis.util.del(options.root, options.include || fis.get('server.clean.include'), exclude);
+};
