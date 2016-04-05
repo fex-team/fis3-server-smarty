@@ -220,9 +220,13 @@ exports.clean = function(options) {
   ].concat(argExclude);
 
   // because fis.util.glob beginning with `^/`，so need fix it.
-  exclude = exclude.map(function (fix) {
-    return options.root + fix;
+  exclude = exclude.map(function (pattern) {
+    var reg = fis.util.glob(pattern);
+    return new RegExp('^' + fis.util.escapeReg(options.root) + reg.source.substring(1));
   });
-  
-  fis.util.del(options.root, options.include || fis.get('server.clean.include'), exclude);
+
+  fis.util.del(options.root,
+    options.include || fis.get('server.clean.include'),
+    options.exclude || exclude || fis.get('server.clean.exclude')
+  );
 };
